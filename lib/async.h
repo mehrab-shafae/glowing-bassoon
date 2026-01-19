@@ -4,46 +4,46 @@
 //*----------------------------------------------------------------------------**
 #include "core.h"
 //*----------------------------------------------------------------------------**
-// template <typename T>
-// class async {
-//     public:
-//         template <typename Func, typename... Args, typename R = std::invoke_result_t<Func, Args...>, typename = std::enable_if_t<std::is_convertible_v<R, T>>>
-//         explicit async(Func&& func, Args&&... args) : future_(std::async(std::launch::async, std::forward<Func>(func), std::forward<Args>(args)...)) {}
+template <typename T>
+class async {
+    public:
+        template <typename Func, typename... Args, typename R = std::invoke_result_t<Func, Args...>, typename = std::enable_if_t<std::is_convertible_v<R, T>>>
+        explicit async(Func&& func, Args&&... args) : future_(std::async(std::launch::async, std::forward<Func>(func), std::forward<Args>(args)...)) {}
 
-//         // Disable copy
-//         async(const async&)            = delete;
-//         async& operator=(const async&) = delete;
+        // Disable copy
+        async(const async&)            = delete;
+        async& operator=(const async&) = delete;
 
-//         // Enable move
-//         async(async&&) noexcept            = default;
-//         async& operator=(async&&) noexcept = default;
+        // Enable move
+        async(async&&) noexcept            = default;
+        async& operator=(async&&) noexcept = default;
 
-//         void wait() const { future_.wait(); }
+        void wait() const { future_.wait(); }
 
-//         T get() { return future_.get(); }
+        T get() { return future_.get(); }
 
-//         bool valid() const noexcept { return future_.valid(); }
+        bool valid() const noexcept { return future_.valid(); }
 
-//         std::future<T>& getFuture() { return future_; }
+        std::future<T>& getFuture() { return future_; }
 
-//         // using value_type = T;
+        // using value_type = T;
 
-//         template <typename Func>
-//         auto then(Func&& cont) && {
-//             using U = std::invoke_result_t<Func, T>;
-//             return async<U>([ fut = std::move(future_), cont = std::forward<Func>(cont) ]() mutable {
-//                 T res = fut.get();
-//                 if constexpr(std::is_void_v<U>) {
-//                     cont(res);
-//                 } else {
-//                     return cont(res);
-//                 }
-//             });
-//         }
+        template <typename Func>
+        auto then(Func&& cont) && {
+            using U = std::invoke_result_t<Func, T>;
+            return async<U>([ fut = std::move(future_), cont = std::forward<Func>(cont) ]() mutable {
+                T res = fut.get();
+                if constexpr(std::is_void_v<U>) {
+                    cont(res);
+                } else {
+                    return cont(res);
+                }
+            });
+        }
 
-//     private:
-//         std::future<T> future_;
-// };
+    private:
+        std::future<T> future_;
+};
 
 // template <>
 // class async<void> {
