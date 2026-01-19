@@ -1,0 +1,19 @@
+# by MRB 
+# musl default compiler (GNU) flags
+if(NOT DEFINED CMUSL_CFLAGS OR CMUSL_CFLAGS STREQUAL "")
+    set(CMUSL_CFLAGS "-static -s -pipe")
+endif()
+if(NOT DEFINED CMUSL_CXXFLAGS OR CMUSL_CXXFLAGS STREQUAL "")
+    set(CMUSL_CXXFLAGS "${CMUSL_CFLAGS}")
+endif()
+if(NOT DEFINED CMUSL_LDFLAGS OR CMUSL_LDFLAGS STREQUAL "")
+    set(CMUSL_LDFLAGS "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed")
+endif()
+if(NOT DEFINED CMUSL_LTOFLAGS OR CMUSL_LTOFLAGS STREQUAL "")
+    set(CMUSL_LTOFLAGS "-flto=auto")
+endif()
+
+#message(STATUS "[CMUSL.cmake]: CFLAGS='${CMUSL_CFLAGS}'")
+#message(STATUS "[CMUSL.cmake]: CXXFLAGS='${CMUSL_CXXFLAGS}'")
+#message(STATUS "[CMUSL.cmake]: LDFLAGS='${CMUSL_LDFLAGS}'")
+#message(STATUS "[CMUSL.cmake]: LTOFLAGS='${CMUSL_LTOFLAGS}'")

@@ -1,0 +1,31 @@
+a.out
+build/
+dist/
+lock/
+archive/
+archive*
+*@lock*
+main
+APP
+SE
+*.exe
+
+*.pyc
+
+# Only ignore unexpected patches
+*.patch
+!contrib/guix/patches/*.patch
+!depends/patches/**/*.patch
+
+/CMakeUserPresets.json
+
+# Previous releases
+/releases
+
+# cargo default target dir
+target/
+
+/guix-build-*
+
+*.log
+.env
