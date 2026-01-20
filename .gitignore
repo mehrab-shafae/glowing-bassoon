@@ -20,12 +20,11 @@ SE
 /CMakeUserPresets.json
 
 # Previous releases
-/releases
-
-# cargo default target dir
-target/
-
-/guix-build-*
+/releases/*
 
 *.log
 .env
+
+/tmp/*
+
+!**/*/.keep
