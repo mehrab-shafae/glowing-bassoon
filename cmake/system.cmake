@@ -1,4 +1,10 @@
 # by MRB 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CMAKE_SYSTEM_NAME Linux)

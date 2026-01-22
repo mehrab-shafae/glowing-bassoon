@@ -17,7 +17,7 @@ if(NOT "${CMUSL_LTOFLAGS}" STREQUAL "")
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
-target_compile_features(APP PRIVATE cxx_std_20)
+#target_compile_features(APP PRIVATE cxx_std_20)
 
 message(STATUS "[CMakeLists]: CMAKE_CXX_FLAGS='${CMAKE_CXX_FLAGS}'")
 message(STATUS "[CMakeLists]: CMAKE_CXX_FLAGS_RELEASE='${CMAKE_CXX_FLAGS_RELEASE}'")
