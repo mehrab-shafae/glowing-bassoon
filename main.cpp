@@ -6,6 +6,8 @@
 //*----------------------------------------------------------------------------**
 #include "lib/core.h"
 //*----------------------------------------------------------------------------**
+#include "test/tpool.cc"
+//*----------------------------------------------------------------------------**
 #define LOG_FILE_NAME "logs/core.log"
 //*----------------------------------------------------------------------------**
 string get_timestamp()
@@ -74,7 +76,15 @@ int log_test() {
 int main() {
     // std::cout;
 
-    return log_test();
+    if(log_test()){
+        console::error("Error!");
+    }
+
+    console::log("tpool test");
+
+    if(tpool()){
+        console::error("Error!");
+    }
 
     return 1;
 }
