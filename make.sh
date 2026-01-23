@@ -12,7 +12,7 @@ mkdir -p build && cd build
 export MUSL_CROSS_ROOT="/opt/raiden"
 #export CMAKE_CXX_FLAGS
 
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Ofast -Wall -Wextra -Wpedantic -g -fwhole-program -s -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdeprecated-declarations " ..
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Ofast -Wall -Wextra -Wpedantic -g -fwhole-program -s -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdeprecated-declarations -fpermissive" ..
 
 cmake --build . --config Release -- -j$(nproc) || exit 1
 

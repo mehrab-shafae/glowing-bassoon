@@ -69,7 +69,7 @@ private:
 
 void exampleTask() {
     std::cout << "Task executed by thread: " << std::this_thread::get_id() << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    std::this_thread::sleep_for(std::chrono::seconds(2));
 }
 
 extern int tpool() {
