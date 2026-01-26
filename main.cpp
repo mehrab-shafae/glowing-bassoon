@@ -6,7 +6,9 @@
 //*----------------------------------------------------------------------------**
 #include "lib/core.h"
 //*----------------------------------------------------------------------------**
-#include "test/tpool.cc"
+// #include "test/tpool.cc"
+#include "test/f.cc"
+
 //*----------------------------------------------------------------------------**
 #define LOG_FILE_NAME "logs/core.log"
 //*----------------------------------------------------------------------------**
@@ -76,15 +78,16 @@ int log_test() {
 int main() {
     // std::cout;
 
-    if(log_test()){
-        console::error("Error!");
-    }
+    // if(log_test()){
+    //     console::error("Error!");
+    // }
 
-    console::log("tpool test");
+    // console::log("tpool test");
 
-    if(tpool()){
-        console::error("Error!");
-    }
+    // if(tpool()){
+    //     console::error("Error!");
+    // }
+    f();
 
     return 1;
 }
