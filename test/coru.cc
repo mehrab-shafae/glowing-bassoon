@@ -5,11 +5,12 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <atomic>
 
 using namespace std::chrono_literals;
 
 // -------------------------------------------
-// Scheduler Singleton (Thread-safe)
+// Scheduler Singleton (Thread-safe + Auto Loop + Joinable)
 // -------------------------------------------
 struct Scheduler {
     struct Timer {
@@ -20,30 +21,41 @@ struct Scheduler {
     };
 
     std::priority_queue<Timer, std::vector<Timer>, std::greater<>> timers;
-    int active_tasks = 0;
+    std::atomic<int> active_tasks{0};
 
     std::mutex mtx;
     std::condition_variable cv;
+    std::thread worker;
+    std::atomic<bool> running{false};
 
     static Scheduler& instance() {
         static Scheduler sched;
         return sched;
     }
 
+    void ensure_worker() {
+        bool expected = false;
+        if (running.compare_exchange_strong(expected, true)) {
+            worker = std::thread([this] { loop(); });
+        }
+    }
+
     void add_task() {
-        std::lock_guard lock(mtx);
         active_tasks++;
+        ensure_worker();
     }
 
     void task_done() {
-        std::lock_guard lock(mtx);
         active_tasks--;
         cv.notify_one();
     }
 
     void add_timer(std::coroutine_handle<> h, std::chrono::milliseconds duration) {
-        std::lock_guard lock(mtx);
-        timers.push({std::chrono::steady_clock::now() + duration, h});
+        {
+            std::lock_guard lock(mtx);
+            timers.push({std::chrono::steady_clock::now() + duration, h});
+        }
+        ensure_worker();
         cv.notify_one();
     }
 
@@ -61,7 +73,7 @@ struct Scheduler {
 
             if (next.wakeup <= now) {
                 timers.pop();
-                lock.unlock();           // آزاد کردن mutex قبل از resume
+                lock.unlock();
                 next.handle.resume();
                 lock.lock();
             } else {
@@ -71,6 +83,22 @@ struct Scheduler {
                 });
             }
         }
+
+        running = false;
+        cv.notify_all(); // اطلاع به main یا هر join کننده
+    }
+
+    // -------------------------------------------
+    // منتظر ماندن تا تمام Task ها تمام شوند
+    // -------------------------------------------
+    void wait_all() {
+        std::unique_lock lock(mtx);
+        cv.wait(lock, [this] { return active_tasks == 0 && timers.empty(); });
+        if (worker.joinable()) worker.join();
+    }
+
+    ~Scheduler() {
+        wait_all(); // اطمینان از اتمام thread
     }
 };
 
@@ -129,8 +157,6 @@ int coru() {
     async_task(1, 1000);
     async_task(2, 2000);
     async_task(3, 1500);
-
-    Scheduler::instance().loop();
 
     std::cout << "Main finished\n";
     return 0;
