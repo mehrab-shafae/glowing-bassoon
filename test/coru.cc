@@ -98,26 +98,13 @@ Task async_task(int id, int delay_ms) {
 // -------------------------------------------
 // Main
 // -------------------------------------------
-int coru() {
-    std::vector<Task> tasks;
+void coru() {
+    async_task(1, 1000);
+    async_task(2, 2000);
+    async_task(3, 1500);
 
-    tasks.push_back(async_task(1, 1000));
-    tasks.push_back(async_task(2, 2000));
-    tasks.push_back(async_task(3, 1500));
-
-    // Start scheduler loop
+    // Start scheduler loop automatically
     Scheduler::instance().loop();
 
     std::cout << "Main finished\n";
-    return 0;
 }
-// void coru() {
-//     async_task(1, 1000);
-//     async_task(2, 2000);
-//     async_task(3, 1500);
-
-//     // Start scheduler loop automatically
-//     Scheduler::instance().loop();
-
-//     std::cout << "Main finished\n";
-// }
