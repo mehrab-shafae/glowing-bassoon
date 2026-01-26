@@ -75,7 +75,7 @@ struct Task {
         }
         struct final_awaiter {
             bool await_ready() noexcept { return false; }
-            void await_suspend(std::coroutine_handle<promise_type> h) noexcept {
+            void await_suspend(std::coroutine_handle<promise_type> /*h*/) noexcept {
                 Scheduler::instance().task_done(); // خودکار وقتی تمام شد
             }
             void await_resume() noexcept {}
@@ -98,7 +98,7 @@ Task async_task(int id, int delay_ms) {
 // -------------------------------------------
 // Main
 // -------------------------------------------
-int coru() {
+void coru() {
     async_task(1, 1000);
     async_task(2, 2000);
     async_task(3, 1500);
