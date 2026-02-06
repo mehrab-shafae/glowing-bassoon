@@ -1,5 +1,5 @@
 
-1-
+1- fail and not found
 
 ```
 -- Detecting C compiler ABI info
@@ -20,5 +20,18 @@
 -- Looking for pthread_create in pthread - found
 ```
 
-2-
+2- std::string()
 
+```
+const auto timestamp = get_timestamp();
+        std::cout << "[" << std::string(timestamp) << "] [" << level << "]: " << msg
+                  << std::endl;
+}
+
+bool file(std::string_view level, std::string_view msg)
+{
+        const auto timestamp = get_timestamp();
+        const auto log_entry = "[" + std::string(timestamp) + "] [" +
+                                      std::string(level) + "] " +
+                                      std::string(msg) + "\n";
+```
