@@ -27,7 +27,7 @@ std::string get_timestamp()
 //*----------------------------------------------------------------------------**
 void write_to_console(std::string_view level, std::string_view msg)
 {
-        const std::string_view timestamp = get_timestamp();
+        const auto timestamp = get_timestamp();
         std::cout << "[" << std::string(timestamp) << "] [" << level << "]: " << msg
                   << std::endl;
 }
@@ -35,8 +35,8 @@ void write_to_console(std::string_view level, std::string_view msg)
 bool write_to_file(std::string_view level, std::string_view msg)
 {
     
-        const std::string_view timestamp = get_timestamp();
-        const std::string log_entry = "[" + std::string(timestamp) + "] [" +
+        const auto timestamp = get_timestamp();
+        const auto log_entry = "[" + std::string(timestamp) + "] [" +
                                       std::string(level) + "] " +
                                       std::string(msg) + "\n";
 
