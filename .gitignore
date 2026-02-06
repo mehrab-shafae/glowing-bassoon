@@ -1,15 +1,7 @@
 a.out
-build/
-dist/
-lock/
-archive/
-archive*
-*@lock*
 main
-APP
-SE
-*.exe
 
+*.exe
 *.pyc
 
 # Only ignore unexpected patches
@@ -21,10 +13,9 @@ SE
 
 # Previous releases
 /releases/*
+/build
 
 *.log
-.env
-
 /tmp/*
 
 !**/*/.keep

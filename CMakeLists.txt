@@ -1,4 +1,4 @@
-# by MRB 
+# by MRB
 cmake_minimum_required(VERSION 3.25...9.9.9)
 project(APP LANGUAGES C CXX)
 
