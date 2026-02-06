@@ -19,3 +19,5 @@ main
 /tmp/*
 
 !**/*/.keep
+
+*@lock

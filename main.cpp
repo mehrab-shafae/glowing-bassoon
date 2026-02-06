@@ -1,13 +1,21 @@
 //*----------------------------------------------------------------------------**
-#include "lib/core.h"
-//*----------------------------------------------------------------------------**
-// #include "test/tpool.cc"
-// #include "test/f.cc"
-#include "test/corul.cc"
+#include <future>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <type_traits>
+#include <utility>
+#include <string>
+#include <string_view>
+#include <fstream>
+#include <iomanip>
+#include <sstream>
+#include <chrono>
+#include <mutex>
 //*----------------------------------------------------------------------------**
 #define LOG_FILE_NAME "logs/core.log"
 //*----------------------------------------------------------------------------**
-string get_timestamp()
+std::string get_timestamp()
 {
     const auto now        = std::chrono::system_clock::now();
     const auto time_point = std::chrono::system_clock::to_time_t(now);
@@ -17,20 +25,20 @@ string get_timestamp()
     return ss.str();
 }
 //*----------------------------------------------------------------------------**
-void write_to_console(string_view level, string_view msg)
+void write_to_console(std::string_view level, std::string_view msg)
 {
-        const let timestamp = get_timestamp();
-        std::cout << "[" << *timestamp << "] [" << level << "]: " << msg
+        const std::string_view timestamp = get_timestamp();
+        std::cout << "[" << std::string(timestamp) << "] [" << level << "]: " << msg
                   << std::endl;
 }
 
-bool write_to_file(string_view level, string_view msg)
+bool write_to_file(std::string_view level, std::string_view msg)
 {
     
-        const let timestamp = get_timestamp();
-        const string log_entry = "[" + *timestamp + "] [" +
-                                      string(level) + "] " +
-                                      string(msg) + "\n";
+        const std::string_view timestamp = get_timestamp();
+        const std::string log_entry = "[" + std::string(timestamp) + "] [" +
+                                      std::string(level) + "] " +
+                                      std::string(msg) + "\n";
 
         std::ofstream log_file{LOG_FILE_NAME, std::ios::app};
         if(log_file.is_open())
@@ -43,19 +51,19 @@ bool write_to_file(string_view level, string_view msg)
 //*----------------------------------------------------------------------------**
 namespace console {
 
-void log(string_view msg)
+void log(std::string_view msg)
 {
     write_to_file("INF", msg);
     write_to_console("INF", msg);
 }
 
-void error(string_view msg)
+void error(std::string_view msg)
 {
     write_to_file("ERR", msg);
     write_to_console("ERR", msg);
 }
 
-void out(string_view level, string_view msg)
+void out(std::string_view level, std::string_view msg)
 {
     write_to_file(level, msg);
     write_to_console(level, msg);
@@ -83,7 +91,7 @@ int main() {
     //     console::error("Error!");
     // }
     // f();
-    corul();
+    // corul();
 
     return 1;
 }
