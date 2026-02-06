@@ -1,4 +1,3 @@
-# by MRB 
 # musl default compiler (GNU) flags
 if(NOT DEFINED CMUSL_CFLAGS OR CMUSL_CFLAGS STREQUAL "")
     set(CMUSL_CFLAGS "-static -s -pipe")

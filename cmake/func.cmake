@@ -1,4 +1,3 @@
-# by MRB 
 function(_set_if_nonempty varname value)
     string(STRIP "${value}" _tmp_strip)
     string(REPLACE "    " "" _tmp "${_tmp_strip}")

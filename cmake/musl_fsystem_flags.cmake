@@ -1,4 +1,3 @@
-# by MRB 
 # musl find system flags
 if(NOT DEFINED CMUSL_CFLAGS OR CMUSL_CFLAGS STREQUAL "")
     if(EXISTS "/etc/makepkg.conf")

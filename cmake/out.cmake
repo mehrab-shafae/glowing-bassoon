@@ -1,4 +1,3 @@
-# by MRB 
 set(BUILD_DIR "${CMAKE_BINARY_DIR}/bin")
 
 file(GLOB_RECURSE SE_SOURCES

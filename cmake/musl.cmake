@@ -1,4 +1,3 @@
-# by MRB 
 _set_if_nonempty(MUSL_CROSS_ROOT "$ENV{MUSL_CROSS_ROOT}")
 
 set(MUSL_CROSS_ROOT "/opt/raiden" CACHE PATH "path to musl cross root")
