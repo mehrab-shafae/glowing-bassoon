@@ -25,16 +25,17 @@ std::string get_timestamp()
     return ss.str();
 }
 //*----------------------------------------------------------------------------**
-void write_to_console(std::string_view level, std::string_view msg)
+namespace out {
+
+void console(std::string_view level, std::string_view msg)
 {
         const auto timestamp = get_timestamp();
         std::cout << "[" << std::string(timestamp) << "] [" << level << "]: " << msg
                   << std::endl;
 }
 
-bool write_to_file(std::string_view level, std::string_view msg)
+bool file(std::string_view level, std::string_view msg)
 {
-    
         const auto timestamp = get_timestamp();
         const auto log_entry = "[" + std::string(timestamp) + "] [" +
                                       std::string(level) + "] " +
@@ -48,52 +49,37 @@ bool write_to_file(std::string_view level, std::string_view msg)
         }
         return false;
 }
+
+} // namespace out
 //*----------------------------------------------------------------------------**
 namespace console {
 
 void log(std::string_view msg)
 {
-    write_to_file("INF", msg);
-    write_to_console("INF", msg);
+    out::file("INF", msg);
+    out::console("INF", msg);
 }
 
 void error(std::string_view msg)
 {
-    write_to_file("ERR", msg);
-    write_to_console("ERR", msg);
+    out::file("ERR", msg);
+    out::console("ERR", msg);
 }
 
 void out(std::string_view level, std::string_view msg)
 {
-    write_to_file(level, msg);
-    write_to_console(level, msg);
+    out::file(level, msg);
+    out::console(level, msg);
 }
 
 }  // namespace console
 //*----------------------------------------------------------------------------**
-int log_test() {
-    console::log("Hi me");
-    return 0;
-    return 1;
-    return 1;
-}
+
 //*----------------------------------------------------------------------------**
 int main() {
     // std::cout;
 
-    // if(log_test()){
-    //     console::error("Error!");
-    // }
-
-    // console::log("tpool test");
-
-    // if(tpool()){
-    //     console::error("Error!");
-    // }
-    // f();
-    // corul();
-
-    return 1;
+    return 0;
 }
 //*----------------------------------------------------------------------------**
 //*----------------------------------------------------------------------------**
