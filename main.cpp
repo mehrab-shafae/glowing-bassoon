@@ -32,7 +32,16 @@ std::string get_timestamp()
 // --------------------------------------------------------------------
 
 // --------------------------------------------------------------------
-namespace out {
+namespace console::in {
+
+void console(std::string& val, const std::string_view msg)
+{
+        std::cin >> val;
+}
+
+} // namespace in
+// --------------------------------------------------------------------
+namespace console::out {
 
 void console(const std::string_view level, const std::string_view msg)
 {
@@ -40,8 +49,8 @@ void console(const std::string_view level, const std::string_view msg)
                                         get_timestamp(),
                                         level);
 
-        if(level == CERR_CKEY) std::cerr << timez << msg << std::endl;
-        std::cout << timez << msg << std::endl;
+        if(level == CERR_CKEY) std::cerr << timez << msg << "\n";
+        std::cout << timez << msg << "\n";
 }
 
 bool file(const std::string_view level, const std::string_view msg)
@@ -64,21 +73,21 @@ namespace console {
 
 void log(const std::string_view msg)
 {
-    out::file(COUT_CKEY, msg);
-    out::console(COUT_CKEY, msg);
+    console::out::file(COUT_CKEY, msg);
+    console::out::console(COUT_CKEY, msg);
 }
 
 void error(const std::string_view msg)
 {
-    out::file(CERR_CKEY, msg);
-    out::console(CERR_CKEY, msg);
+    console::out::file(CERR_CKEY, msg);
+    console::out::console(CERR_CKEY, msg);
 }
 
-void out(const std::string_view level, const std::string_view msg)
-{
-    out::file(level, msg);
-    out::console(level, msg);
-}
+// void out(const std::string_view level, const std::string_view msg)
+// {
+//     console::out::file(level, msg);
+//     console::out::console(level, msg);
+// }
 
 }  // namespace console
 // --------------------------------------------------------------------
@@ -86,6 +95,10 @@ void out(const std::string_view level, const std::string_view msg)
 // --------------------------------------------------------------------
 int main(const int argc, const char* argv[]) {
     console::log("Hi");
+
+    // std::string valu;
+    // console::in::console(valu, "Hi");
+    // console::log(valu);
 
     return 0;
 }
