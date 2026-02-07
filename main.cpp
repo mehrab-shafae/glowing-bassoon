@@ -11,6 +11,7 @@
 #include <sstream>
 #include <chrono>
 #include <mutex>
+#include <format>
 // --------------------------------------------------------------------
 #define LOG_FILE_NAME "logs/core.log"
 #define LOG_TIME_Z "%H:%M-%d.%m.%y+%Z"
@@ -33,22 +34,25 @@ std::string get_timestamp()
 // --------------------------------------------------------------------
 namespace out {
 
-void console(std::string_view level, std::string_view msg)
+void console(const std::string_view level, const std::string_view msg)
 {
-        const auto timez = "[" + std::string(get_timestamp()) + "] [" + std::string(level) + "]: ";
+        const auto timez = std::format("[{}] [{}]: ",
+                                        get_timestamp(),
+                                        level);
 
         if(level == CERR_CKEY) std::cerr << timez << msg << std::endl;
         std::cout << timez << msg << std::endl;
 }
 
-bool file(std::string_view level, std::string_view msg)
+bool file(const std::string_view level, const std::string_view msg)
 {
         std::ofstream log_file{LOG_FILE_NAME, std::ios::app};
         if(log_file.is_open())
         {
-            log_file << ("[" + std::string(get_timestamp()) + "] [" +
-                                      std::string(level) + "] " +
-                                      std::string(msg) + "\n");
+            log_file << std::format("[{}] [{}] {}\n",
+                                    get_timestamp(),
+                                    level,
+                                    msg);
             return true;
         }
         return false;
@@ -58,19 +62,19 @@ bool file(std::string_view level, std::string_view msg)
 // --------------------------------------------------------------------
 namespace console {
 
-void log(std::string_view msg)
+void log(const std::string_view msg)
 {
     out::file(COUT_CKEY, msg);
     out::console(COUT_CKEY, msg);
 }
 
-void error(std::string_view msg)
+void error(const std::string_view msg)
 {
     out::file(CERR_CKEY, msg);
     out::console(CERR_CKEY, msg);
 }
 
-void out(std::string_view level, std::string_view msg)
+void out(const std::string_view level, const std::string_view msg)
 {
     out::file(level, msg);
     out::console(level, msg);
@@ -80,7 +84,7 @@ void out(std::string_view level, std::string_view msg)
 // --------------------------------------------------------------------
 
 // --------------------------------------------------------------------
-int main(int argc, char* argv[]) {
+int main(const int argc, const char* argv[]) {
     console::log("Hi");
 
     return 0;
