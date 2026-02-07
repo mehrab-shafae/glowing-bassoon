@@ -7,6 +7,8 @@ int main(const int argc, const char* argv[]) {
 
     db::unit0::join("mehrab");
 
+    console::log("db joined");
+
     // std::string valu;
     // console::in::console(valu, "Hi");
     // console::log(valu);
