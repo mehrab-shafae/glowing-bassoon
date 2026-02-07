@@ -1,7 +1,7 @@
 set(BUILD_DIR "${CMAKE_BINARY_DIR}/bin")
 
 file(GLOB_RECURSE SE_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
 )
 
 if(SE_SOURCES)
