@@ -1,14 +1,28 @@
-#include "core.hpp"
+#include <future>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <type_traits>
+#include <utility>
+#include <string>
+#include <string_view>
+#include <fstream>
+#include <iomanip>
+#include <sstream>
+#include <chrono>
+#include <mutex>
 // --------------------------------------------------------------------
 #define LOG_FILE_NAME "logs/core.log"
 #define LOG_TIME_Z "%H:%M-%d.%m.%y+%Z"
+
+#define CERR_CKEY "ERR"
+#define COUT_CKEY "INF"
 // --------------------------------------------------------------------
 
 // --------------------------------------------------------------------
 std::string get_timestamp()
 {
-    const auto now        = std::chrono::system_clock::now();
-    const auto time_point = std::chrono::system_clock::to_time_t(now);
+    const auto time_point = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
     std::stringstream ss;
     ss << std::put_time(std::localtime(&time_point), LOG_TIME_Z);
@@ -21,22 +35,20 @@ namespace out {
 
 void console(std::string_view level, std::string_view msg)
 {
-        const auto timestamp = get_timestamp();
-        std::cout << "[" << std::string(timestamp) << "] [" << level << "]: " << msg
-                  << std::endl;
+        const auto timez = "[" + std::string(get_timestamp()) + "] [" + std::string(level) + "]: ";
+
+        if(level == CERR_CKEY) std::cerr << timez << msg << std::endl;
+        std::cout << timez << msg << std::endl;
 }
 
 bool file(std::string_view level, std::string_view msg)
 {
-        const auto timestamp = get_timestamp();
-        const auto log_entry = "[" + std::string(timestamp) + "] [" +
-                                      std::string(level) + "] " +
-                                      std::string(msg) + "\n";
-
         std::ofstream log_file{LOG_FILE_NAME, std::ios::app};
         if(log_file.is_open())
         {
-            log_file << log_entry;
+            log_file << ("[" + std::string(get_timestamp()) + "] [" +
+                                      std::string(level) + "] " +
+                                      std::string(msg) + "\n");
             return true;
         }
         return false;
@@ -48,14 +60,14 @@ namespace console {
 
 void log(std::string_view msg)
 {
-    out::file("INF", msg);
-    out::console("INF", msg);
+    out::file(COUT_CKEY, msg);
+    out::console(COUT_CKEY, msg);
 }
 
 void error(std::string_view msg)
 {
-    out::file("ERR", msg);
-    out::console("ERR", msg);
+    out::file(CERR_CKEY, msg);
+    out::console(CERR_CKEY, msg);
 }
 
 void out(std::string_view level, std::string_view msg)
@@ -68,7 +80,7 @@ void out(std::string_view level, std::string_view msg)
 // --------------------------------------------------------------------
 
 // --------------------------------------------------------------------
-int main() {
+int main(int argc, char* argv[]) {
     console::log("Hi");
 
     return 0;
