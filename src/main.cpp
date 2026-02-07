@@ -1,10 +1,11 @@
 #include "core.hpp"
 #include "console.hh"
+#include "db.hh"
 // --------------------------------------------------------------------
 int main(const int argc, const char* argv[]) {
     console::log("Hi");
 
-    fs::unit0::dbJoin("Cc");
+    db::unit0::join("mehrab");
 
     // std::string valu;
     // console::in::console(valu, "Hi");

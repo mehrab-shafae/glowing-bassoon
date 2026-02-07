@@ -26,15 +26,11 @@ bool console(const std::string_view level, const std::string_view msg)
         return false;
 }
 
-} // namespace out
-// --------------------------------------------------------------------
-namespace fs::unit0 {
-
-bool dbJoin(const std::string_view dbName)
+bool touch(const std::string_view fullName)
 {
-        if (dbName == "") return false;
+        if (fullName == "") return false;
 
-        const std::string path = std::format("{}/{}.data", DATA_FOLDER_PATH, dbName);
+        const std::string path = std::format("{}/{}", DATA_FOLDER_PATH, fullName);
         std::ofstream dbFile{path, std::ios::app};
         if(dbFile.is_open())
         {
@@ -44,5 +40,5 @@ bool dbJoin(const std::string_view dbName)
         return false;
 }
 
-} // namespace unit0
+} // namespace touch
 // --------------------------------------------------------------------
