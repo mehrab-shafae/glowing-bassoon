@@ -3,8 +3,13 @@
 #include "fs.hh"
 #include "time.hh"
 // --------------------------------------------------------------------
+#ifndef CERR_CKEY
 #define CERR_CKEY "ERR"
+#endif
+
+#ifndef COUT_CKEY
 #define COUT_CKEY "INF"
+#endif
 // --------------------------------------------------------------------
 namespace console::in {
 

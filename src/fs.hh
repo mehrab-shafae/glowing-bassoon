@@ -2,7 +2,9 @@
 #include "core.hpp"
 #include "time.hh"
 // --------------------------------------------------------------------
+#ifndef LOG_FILE_NAME
 #define LOG_FILE_NAME "logs/core.log"
+#endif
 // --------------------------------------------------------------------
 namespace fs::out {
 

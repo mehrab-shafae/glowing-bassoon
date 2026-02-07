@@ -1,7 +1,9 @@
 #pragma once
 #include "core.hpp"
 // --------------------------------------------------------------------
+#ifndef LOG_TIME_Z
 #define LOG_TIME_Z "%H:%M-%d.%m.%y+%Z"
+#endif
 // --------------------------------------------------------------------
 std::string get_timestamp()
 {
