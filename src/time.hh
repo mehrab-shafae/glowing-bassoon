@@ -14,3 +14,9 @@ std::string get_timestamp()
     return ss.str();
 }
 // --------------------------------------------------------------------
+// inline std::chrono::duration<double> time()
+// {
+// // std::chrono::high_resolution_clock::now(); const std::chrono::duration<double> elapsed = end_time - start_time; std::cout << std::fixed << std::setprecision(6); echo("high-clock end: " << elapsed.count() << "s")
+//     return std::chrono::high_resolution_clock::now();
+// }
+// --------------------------------------------------------------------

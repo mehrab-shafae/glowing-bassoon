@@ -13,10 +13,10 @@
 // --------------------------------------------------------------------
 namespace console::in {
 
-void console(std::string& val, const std::string_view msg)
-{
-        std::cin >> val;
-}
+// void console(std::string& val, const std::string_view msg)
+// {
+//         std::cin >> val;
+// }
 
 } // namespace in
 // --------------------------------------------------------------------
